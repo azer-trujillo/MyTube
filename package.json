@@ -1,0 +1,8 @@
+{
+  "name": "mytube",
+  "version": "0.0.1",
+  "description": "A simple youtube browser with google oauth.",
+  "main": "index.js",
+  "author": "Wragdan",
+  "license": "MIT"
+}
