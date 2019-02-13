@@ -12,12 +12,12 @@ export const searchVideos = search => ({
   )
 });
 
-export const addFavorite = videoId => ({
+export const addToWatchLater = videoId => ({
   type: 'ADD_FAVORITE',
   videoId
 });
 
-export const startAddFavorite = (videoId = '') => {
+export const startAddToWatchLater = (videoId = '') => {
   return (dispatch, getState) => {
     const { uid } = getState().auth;
 
@@ -25,7 +25,30 @@ export const startAddFavorite = (videoId = '') => {
       .ref(`users/${uid}/favorites`)
       .push(videoId)
       .then(() => {
-        dispatch(addFavorite(videoId));
+        dispatch(addToWatchLater(videoId));
+      });
+  };
+};
+
+// SET_EXPENSES
+export const setWatchList = watchLater => ({
+  type: 'SET_WATCHLIST',
+  watchLater
+});
+
+export const startSetWatchList = () => {
+  return (dispatch, getState) => {
+    const { uid } = getState().auth;
+    return database
+      .ref(`users/${uid}/favorites`)
+      .once('value')
+      .then(snapshot => {
+        const watchLater = [];
+        snapshot.forEach(childSnapshot => {
+          watchLater.push(childSnapshot.val());
+        });
+
+        dispatch(setWatchList(watchLater));
       });
   };
 };

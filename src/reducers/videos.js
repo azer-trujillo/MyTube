@@ -8,7 +8,7 @@ const videosReducerDefaultState = {
     resultsPerPage: 0
   },
   items: [],
-  favorites: []
+  watchLater: []
 };
 
 export default (state = videosReducerDefaultState, action) => {
@@ -36,7 +36,12 @@ export default (state = videosReducerDefaultState, action) => {
     case 'ADD_FAVORITE':
       return {
         ...state,
-        favorites: [...state.favorites, action.payload]
+        watchLater: [...state.watchLater, action.videoId]
+      };
+    case 'SET_WATCHLIST':
+      return {
+        ...state,
+        watchLater: action.watchLater
       };
     default:
       return state;

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Layout, Menu, Icon } from 'antd';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { startLogout } from '../actions/auth';
 
 const { Sider } = Layout;
 
@@ -13,8 +15,13 @@ class SideBar extends Component {
 
   // eslint-disable-next-line
   handleClick(e) {
-    const { history } = this.props;
-    history.push(e.key);
+    if (e.key === 'logout') {
+      const { logout } = this.props;
+      logout();
+    } else {
+      const { history } = this.props;
+      history.push(e.key);
+    }
   }
 
   render() {
@@ -34,10 +41,16 @@ class SideBar extends Component {
               Search
             </span>
           </Menu.Item>
-          <Menu.Item key="/favorites">
+          <Menu.Item key="/watchlater">
             <span>
-              <Icon type="star" />
-              Favorites
+              <Icon type="clock-circle" />
+              Watch Later
+            </span>
+          </Menu.Item>
+          <Menu.Item key="logout">
+            <span>
+              <Icon type="logout" />
+              Logout
             </span>
           </Menu.Item>
         </Menu>
@@ -48,7 +61,19 @@ class SideBar extends Component {
 
 SideBar.propTypes = {
   location: PropTypes.object.isRequired, //eslint-disable-line
-  history: PropTypes.object.isRequired //eslint-disable-line
+  history: PropTypes.object.isRequired, //eslint-disable-line
+  logout: PropTypes.func.isRequired
 };
 
-export default withRouter(SideBar);
+// const mapStateToProps = state => ({
+//   watchLaterList: state.videos.watchLater
+// });
+
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(startLogout())
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(SideBar));

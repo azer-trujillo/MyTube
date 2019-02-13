@@ -1,0 +1,22 @@
+.box-layout {
+  align-items: center;
+  background: url('https://images.unsplash.com/photo-1530482817083-29ae4b92ff15?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80');
+  background-size: cover;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+.box-layout__box {
+  background: fade-out(white, 0.15);
+  border-radius: 3px;
+  padding: 20px 15px;
+  text-align: center;
+  width: 25rem;
+}
+
+.box-layout__title {
+  margin: 0 0 10px 0;
+  line-height: 1;
+}

@@ -11,6 +11,8 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import HomePage from '../components/HomePage';
 import NotFoundPage from '../components/NotFoundPage';
+import WatchVideo from '../components/WatchVideo';
+import WatchLater from '../components/WatchLater';
 
 export const history = createHistory();
 
@@ -20,8 +22,8 @@ const AppRouter = () => (
       <Switch>
         <PublicRoute path="/" component={LoginPage} exact />
         <PrivateRoute path="/home" component={HomePage} />
-        {/* <PrivateRoute path="/create" component={AddExpensePage} /> */}
-        {/* <PrivateRoute path="/edit/:id" component={EditExpensePage} /> */}
+        <PrivateRoute path="/watch/:videoId" component={WatchVideo} />
+        <PrivateRoute path="/watchlater" component={WatchLater} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>

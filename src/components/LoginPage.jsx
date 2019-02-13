@@ -7,7 +7,7 @@ const LoginPage = ({ startLogin }) => (
   <div className="box-layout">
     <div className="box-layout__box">
       <h1 className="box-layout__title">MyTube</h1>
-      <p>Just another youtube client (i think).</p>
+      <p>Just a simple youtube search client</p>
       <button className="button" onClick={() => startLogin()} type="button">
         Login with Google
       </button>

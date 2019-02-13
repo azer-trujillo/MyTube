@@ -4,6 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Layout } from 'antd';
 import SideBar from '../components/SideBar';
+import Clock from '../components/Clock';
 
 const { Header, Content } = Layout;
 
@@ -14,7 +15,7 @@ const PrivateRoute = ({ isAuthenticated, component: Component, ...rest }) => (
       isAuthenticated ? (
         <Layout style={{ height: '100vh' }}>
           <Header className="header">
-            <span style={{ color: 'red' }}>MY TUBE</span>
+            <Clock />
           </Header>
           <Layout>
             <SideBar />
