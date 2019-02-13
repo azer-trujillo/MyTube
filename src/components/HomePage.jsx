@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Input, List, Icon, Avatar } from 'antd';
+import { Input, Spin, List, Avatar } from 'antd';
+import { Link } from 'react-router-dom';
 import { searchVideos } from '../actions/videos';
 
 const { Search } = Input;
@@ -9,48 +10,40 @@ const { Search } = Input;
 const HomePage = props => {
   const { videos } = props;
   return (
-    <div>
-      <Search
-        placeholder="input search text"
-        onSearch={value => props.searchVideos({ keyword: value, maxResults: 20, pageToken: '' })}
-        enterButton
-      />
-      {videos.fetching && <span>Loading...</span>}
-      {videos.fetched && (
-        <List
-          itemLayout="horizontal"
-          pagination={{
-            onChange: page => {
-              console.log(page); //eslint-disable-line
-            },
-            pageSize: 8
-          }}
-          dataSource={videos.items}
-          renderItem={item => (
-            <List.Item>
-              <List.Item.Meta
-                avatar={<Avatar src={item.snippet.thumbnails.high.url} />}
-                title={<a href="/">{item.snippet.title}</a>}
-                description={item.snippet.description}
-              />
-            </List.Item>
-          )}
+    <div className="box">
+      <div className="row search">
+        <Search
+          placeholder="input search text"
+          onSearch={value => props.searchVideos({ keyword: value, maxResults: 50, pageToken: '' })}
+          enterButton
         />
-      )}
+      </div>
+      <div className="row content">
+        {videos.fetching && <Spin size="large" />}
+        {videos.fetched && (
+          <List
+            itemLayout="horizontal"
+            pagination={{
+              onChange: page => {
+                console.log(page); //eslint-disable-line
+              },
+              pageSize: 5
+            }}
+            dataSource={videos.items}
+            renderItem={item => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar src={item.snippet.thumbnails.high.url} />}
+                  title={<Link to={`watch/${item.id.videoId}`}>{item.snippet.title}</Link>}
+                  description={`${item.snippet.description.substring(0, 100)}...`}
+                />
+              </List.Item>
+            )}
+          />
+        )}
+      </div>
     </div>
   );
-};
-
-const IconText = ({ type, text }) => (
-  <span>
-    <Icon type={type} style={{ marginRight: 8 }} />
-    {text}
-  </span>
-);
-
-IconText.propTypes = {
-  type: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired
 };
 
 HomePage.propTypes = {

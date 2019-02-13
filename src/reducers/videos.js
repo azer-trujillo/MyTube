@@ -7,7 +7,8 @@ const videosReducerDefaultState = {
     totalResults: 0,
     resultsPerPage: 0
   },
-  items: []
+  items: [],
+  favorites: []
 };
 
 export default (state = videosReducerDefaultState, action) => {
@@ -31,6 +32,11 @@ export default (state = videosReducerDefaultState, action) => {
         nextPageToken: action.payload.data.nextPageToken,
         pageInfo: action.payload.data.pageInfo,
         items: action.payload.data.items
+      };
+    case 'ADD_FAVORITE':
+      return {
+        ...state,
+        favorites: [...state.favorites, action.payload]
       };
     default:
       return state;
