@@ -12,11 +12,8 @@ if (process.env.NODE_ENV === 'test') {
   dotenv.config({ path: '.env.development' });
 }
 
-module.exports = env => {
-  const isProduction = env === 'production';
-
+module.exports = (emv, argv) => {
   return {
-    mode: 'development',
     entry: './src/index.jsx',
     output: {
       path: path.join(__dirname, 'build'),
@@ -37,7 +34,7 @@ module.exports = env => {
           use: [
             'style-loader', // creates style nodes from JS strings
             // fallback to style-loader in development
-            process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
+            argv.mode !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
             'css-loader',
             'sass-loader'
           ]
@@ -58,7 +55,7 @@ module.exports = env => {
     },
     plugins: [
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': isProduction ? '"production"' : '"development"'
+        'process.env.NODE_ENV': '"production"'
       }),
       new webpack.DefinePlugin({
         'process.env.FIREBASE_API_KEY': JSON.stringify(process.env.FIREBASE_API_KEY),
