@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Input, Col, Row } from 'antd';
+import { Input, List, Icon, Avatar } from 'antd';
 import { searchVideos } from '../actions/videos';
 
 const { Search } = Input;
@@ -16,16 +16,41 @@ const HomePage = props => {
         enterButton
       />
       {videos.fetching && <span>Loading...</span>}
-      {videos.fetched &&
-        videos.items.map(v => {
-          return (
-            <Row key={v.id.videoId}>
-              <Col span={12}>{v.snippet.title}</Col>
-            </Row>
-          );
-        })}
+      {videos.fetched && (
+        <List
+          itemLayout="horizontal"
+          pagination={{
+            onChange: page => {
+              console.log(page); //eslint-disable-line
+            },
+            pageSize: 8
+          }}
+          dataSource={videos.items}
+          renderItem={item => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={<Avatar src={item.snippet.thumbnails.high.url} />}
+                title={<a href="/">{item.snippet.title}</a>}
+                description={item.snippet.description}
+              />
+            </List.Item>
+          )}
+        />
+      )}
     </div>
   );
+};
+
+const IconText = ({ type, text }) => (
+  <span>
+    <Icon type={type} style={{ marginRight: 8 }} />
+    {text}
+  </span>
+);
+
+IconText.propTypes = {
+  type: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired
 };
 
 HomePage.propTypes = {
