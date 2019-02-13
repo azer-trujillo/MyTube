@@ -7,17 +7,12 @@ const dotenv = require('dotenv');
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 if (process.env.NODE_ENV === 'test') {
-  console.log('dotenv config = .env.test'); //eslint-disable-line
   dotenv.config({ path: '.env.test' });
 } else if (process.env.NODE_ENV === 'development') {
-  console.log('dotenv config = .env.development'); //eslint-disable-line
   dotenv.config({ path: '.env.development' });
 }
 
 module.exports = (env, argv) => {
-  console.log('env = ' + env); //eslint-disable-line
-  console.log('NODE_ENV = ' + process.env.NODE_ENV); //eslint-disable-line
-  console.log('MODE = ' + argv.mode); //eslint-disable-line
   return {
     entry: './src/index.jsx',
     output: {
